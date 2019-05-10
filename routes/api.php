@@ -24,7 +24,7 @@ Route::get('show', 'UserController@show');
 Route::get('show/{{id}}', 'UserController@all');
 
 
-
+Route::resource('artikel','ArtikelController',['except' => ['create','edit']]);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');
