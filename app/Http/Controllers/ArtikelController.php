@@ -3,6 +3,8 @@
 namespace sarjanatani\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use sarjanatani\Artikel;
 
@@ -12,7 +14,9 @@ class ArtikelController extends Controller
 
     public function index()
     {
-        return response()->json(['status' => 'success','code'=>'200', 'data' => Artikel::all()]);
+		$artikels = \DB::table('artikels')->Paginate(2);
+		return response()->json($artikels);
+        // return response()->json(['status' => 'success','code'=>'200', 'data' =>'artikels.index', compact('artikels') ]);
     }
 
     public function create()

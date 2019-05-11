@@ -16,7 +16,7 @@ class Artikel extends Migration
         Schema::create('artikels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('judul');
-            $table->string('deskripsi');
+            $table->longtext('deskripsi');
             $table->string('image');
             $table->timestamps();
         });
