@@ -19,10 +19,10 @@
 
             try {
                 if (! $token = JWTAuth::attempt($credentials)) {
-                    return response()->json(['error' => 'invalid_credentials'], 400);
+                    return response()->json(['code' => '400','error' => 'invalid_credentials'], 400);
                 }
             } catch (JWTException $e) {
-                return response()->json(['error' => 'could_not_create_token'], 500);
+                return response()->json(['code' => '400','error' => 'could_not_create_token'], 500);
             }
 
             return response()->json(['status' => 'success','code'=>'200','data' => compact('token')]);        
@@ -38,7 +38,7 @@
             ]);
 
             if($validator->fails()){
-                    return response()->json($validator->errors()->toJson(), 400);
+                    return response()->json(['status' => 'error','code'=>'400','message' => 'error cek parameter']);        
             }
 
             $user = User::create([
