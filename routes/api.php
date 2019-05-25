@@ -22,10 +22,11 @@ Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 Route::get('open', 'DataController@open');
 Route::get('show', 'UserController@show');
-Route::get('show/{{id}}', 'UserController@all');
+Route::get('show/{id}', 'UserController@all');
 
 
 Route::resource('artikel','ArtikelController',['except' => ['create','edit']]);
+Route::resource('lahan','LahanController');
 
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', 'UserController@getAuthenticatedUser');

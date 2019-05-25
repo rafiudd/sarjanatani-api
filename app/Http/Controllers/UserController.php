@@ -16,6 +16,7 @@
         public function authenticate(Request $request)
         {
             $credentials = $request->only('email', 'password');
+            $cek = $request->only('email');
 
             try {
                 if (! $token = JWTAuth::attempt($credentials)) {
@@ -25,7 +26,11 @@
                 return response()->json(['code' => '400','error' => 'could_not_create_token'], 500);
             }
 
-            return response()->json(['status' => 'success','code'=>'200','data' => compact('token')]);        
+            $data = DB::table('users')->select('*')->where('email',$cek)->get();
+            $data = $data[0];
+
+
+            return response()->json(['status' => true,'code'=>'200','data' => $data,"token" => $token]);        
         }
 
         public function register(Request $request)
@@ -38,7 +43,7 @@
             ]);
 
             if($validator->fails()){
-                    return response()->json(['status' => 'error','code'=>'400','message' => 'error cek parameter']);        
+                    return response()->json(['status' => false,'code'=>'400','message' => 'error cek parameter']);        
             }
 
             $user = User::create([
@@ -49,7 +54,7 @@
             ]);
 
             $token = JWTAuth::fromUser($user);
-            return response()->json(['status' => 'success','code'=>'200','data' => compact('user','token')]);        
+            return response()->json(['status' => true,'code'=>'200','data' => $user,"token" => $token]);        
         }
 
         public function getAuthenticatedUser()
@@ -82,5 +87,14 @@
             return response()->json(['status' => 'success','code'=>'200', 'data' => User::all()]);        
         }
 
+        public function all($id)
+        {
+            $user = User::find($id);
+            if ($user) {
+              return response()->json(['status' => 'success','code' => '200', 'data'=> $user]);
+            }
+     
+            return response()->json(['status' => 'error','code' => '404', 'message' => 'Data not found'],404);
+        }
 
 }
