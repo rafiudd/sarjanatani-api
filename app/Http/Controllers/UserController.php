@@ -84,6 +84,7 @@
 
         public function show()
         {
+            // $users = User::with('lahan')->get();
             return response()->json(['status' => 'success','code'=>'200', 'data' => User::all()]);        
         }
 
@@ -96,5 +97,12 @@
      
             return response()->json(['status' => 'error','code' => '404', 'message' => 'Data not found'],404);
         }
-
+        
+        public function logout(Request $request)
+        {
+            $request->user()->token()->revoke();
+            return response()->json([
+                'message' => 'Successfully logged out'
+            ]);
+        }
 }

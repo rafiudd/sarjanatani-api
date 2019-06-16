@@ -11,6 +11,10 @@ class Lahan extends Model
 	    return $this->belongsTo('Users', 'id');
 	}
 	protected $fillable = [
-        'luas_lahan'
+       'user_id','luas_tanam','jenis_tanam','mulai_tanam'
     ];
+
+    public function getUser() {
+    	return $this->hasMany('App\User');
+    }
 }

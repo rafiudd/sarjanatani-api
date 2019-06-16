@@ -12,8 +12,7 @@ class LahanController extends Controller
 {
  public function index()
     {
-		$lahan = \DB::table('lahans')->Paginate(2);
-        return response()->json(['status' => 'success','code'=>'200', 'data' =>'artikels.index', compact('lahans') ]);
+      return response()->json(['status' => 'success','code'=>'200', 'data' => Lahan::all()]);        
     }
 
     public function create()
@@ -22,9 +21,12 @@ class LahanController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {     
+
           Lahan::create([
-              'luas_lahan' => request('luas_lahan'),
+              'luas_tanam' => request('luas_tanam'),
+              'jenis_tanam' => request('jenis_tanam'),
+              'mulai_tanam' => request('mulai_tanam'),
           ]);
    
           if (Lahan::create($request->all())) {

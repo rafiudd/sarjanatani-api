@@ -5,6 +5,8 @@ namespace sarjanatani;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\Model;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -35,5 +37,8 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function lahan(){
+        return $this->belongsTo('Lahan','user_id');
     }
 }
