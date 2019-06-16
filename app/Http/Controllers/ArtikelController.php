@@ -14,7 +14,7 @@ class ArtikelController extends Controller
 
     public function index()
     {
-		$artikels = \DB::table('artikels')->Paginate(2);
+		$artikels = \DB::table('artikels')->Paginate(7);
 		return response()->json($artikels);
         // return response()->json(['status' => 'success','code'=>'200', 'data' =>'artikels.index', compact('artikels') ]);
     }
